@@ -124,10 +124,10 @@ class MainActivity : AppCompatActivity() {
     private fun message(msg: String, mode: Boolean) {
         if (!mode) {
             msgText.setTextColor(getColor(R.color.red))
-            msgText.text = getString(R.string.login_gagal) + msg
+            msgText.text = getString(R.string.login_gagal, msg)
         }else {
             msgText.setTextColor(getColor(R.color.green))
-            msgText.text = getString(R.string.login_berhasil) + msg
+            msgText.text = getString(R.string.login_berhasil, msg)
         }
     }
 }
