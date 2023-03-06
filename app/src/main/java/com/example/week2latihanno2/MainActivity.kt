@@ -12,20 +12,18 @@ class MainActivity : AppCompatActivity() {
     private val LONG_LENGTH = 2
     private val SHORT_LENGTH = 0
 
-    private lateinit var username: EditText
-    private lateinit var password: EditText
-    private lateinit var btn: Button
+    private lateinit var etUsername: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var loginBtn: Button
     private lateinit var msgText: TextView
 
     lateinit var validUsers: List<User>
 
     private fun isValidUser(user: User): Boolean {
-        for (validUserName in validUsers) {
-            when{
-                user.name.equals(validUserName.name, ignoreCase = true) && user.password == validUserName.password -> return true
-            }
+        val valid = validUsers.filter {validUserName ->
+            user.name.equals(validUserName.name, ignoreCase = true) && user.password == validUserName.password
         }
-        return false
+        return valid.isNotEmpty()
     }
 
     //Check string length
@@ -62,8 +60,8 @@ class MainActivity : AppCompatActivity() {
         initValidUsers()
         initView()
 
-        btn.setOnClickListener {
-            val userInput = User(username.text.toString(), password.text.toString())
+        loginBtn.setOnClickListener {
+            val userInput = User(etUsername.text.toString(), etPassword.text.toString())
 
             if (!checkUser(userInput)) return@setOnClickListener
             message(userInput.name, true)
@@ -75,14 +73,11 @@ class MainActivity : AppCompatActivity() {
         val validPassChar = isValidPassChar(userInput.password)
         val usernameLength = isNameLong(userInput.name) //0 artinya kependekan, 1 artinya sempurna, 2 artinya kepanjangan
         val passwordLength = isPassLong(userInput.password) //sama kyk di atas
-        val validName = isValidUser(userInput)
+        val validUser = isValidUser(userInput)
 
         return when {
             !validUserChar -> {
                 message(getString(R.string.username_char), false); false
-            }
-            !validPassChar -> {
-                message(getString(R.string.pass_char), false); false
             }
             usernameLength == 0 -> {
                 message(getString(R.string.username_tooshort), false); false
@@ -90,13 +85,16 @@ class MainActivity : AppCompatActivity() {
             usernameLength == 2 -> {
                 message(getString(R.string.username_toolong), false); false
             }
+            !validPassChar -> {
+                message(getString(R.string.pass_char), false); false
+            }
             passwordLength == 0 -> {
                 message(getString(R.string.pass_tooshort), false); false
             }
             passwordLength == 2 -> {
                 message(getString(R.string.pass_toolong), false); false
             }
-            !validName -> {
+            !validUser -> {
                 message(getString(R.string.invalid_user), false)
                 false
             }
@@ -107,9 +105,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        username = findViewById(R.id.et_username)
-        password = findViewById(R.id.et_password)
-        btn = findViewById(R.id.btn_submit)
+        etUsername = findViewById(R.id.et_username)
+        etPassword = findViewById(R.id.et_password)
+        loginBtn = findViewById(R.id.btn_submit)
         msgText = findViewById(R.id.message)
     }
 
@@ -126,10 +124,10 @@ class MainActivity : AppCompatActivity() {
     private fun message(msg: String, mode: Boolean) {
         if (!mode) {
             msgText.setTextColor(getColor(R.color.red))
-            msgText.text = "Login Gagal:\n$msg"
+            msgText.text = getString(R.string.login_gagal) + msg
         }else {
             msgText.setTextColor(getColor(R.color.green))
-            msgText.text = "Login Berhasil:\nSelamat datang $msg"
+            msgText.text = getString(R.string.login_berhasil) + msg
         }
     }
 }
