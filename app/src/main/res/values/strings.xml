@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Week2LatihanNo2</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="submit">Submit</string>
+    <string name="username_char">Username harus terdiri dari kombinasi angka dan huruf!</string>
+    <string name="pass_char">Password harus terdiri dari kombinasi angka, huruf, dan simbol!</string>
+    <string name="username_tooshort">Username terlalu pendek!</string>
+    <string name="username_toolong">Username terlalu panjang!</string>
+    <string name="pass_tooshort">Password terlalu pendek!</string>
+    <string name="pass_toolong">Password terlalu panjang!</string>
+    <string name="invalid_user">Username atau password tidak valid!</string>
+    <string name="pass_invalid">Password tidak valid!</string>
+</resources>
